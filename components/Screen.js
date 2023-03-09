@@ -9,9 +9,7 @@ export default function Screen(props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        {props.children}
-      </main>
+      <main>{props.children}</main>
 
       <footer></footer>
     </div>
