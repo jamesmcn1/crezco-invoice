@@ -3,14 +3,17 @@ import { useRouter } from 'next/router'
 import { v4 as uuidv4 } from 'uuid';
 import Screen from '../components/Screen'
 import Title from '../components/Title'
+import {QRCodeSVG} from 'qrcode.react';
 
 export default function Invoice() {
   const [userData, setUserData] = React.useState({});
+  const [paymentData, setPaymentData] = React.useState({});
   const apiKey = 'cKJTQJ3T2j9FM5dySUfExkhPCaEg4Nut'
   const router = useRouter()
   const userId = router.query['user-id']
   const usersUrl = `https://api.sandbox.crezco.com/v1/users/${userId}`;
   const payDemandUrl = `https://api.sandbox.crezco.com/v1/users/${userId}/pay-demands`
+  const getPayDemandUri = 'https://api.sandbox.crezco.com/v1/pay-demands/'
 
   console.log(userId)
 
@@ -25,11 +28,6 @@ export default function Invoice() {
           headers: {
             'Content-Type': 'application/json',
             'X-Crezco-Key': `${apiKey}`,
-            // 'Access-Control-Allow-Credentials': 'true',
-            // 'Access-Control-Allow-Origin': '*',
-            // 'Access-Control-Allow-Methods': 'GET,OPTIONS,PATCH,DELETE,POST,PUT',
-            // 'Access-Control-Allow-Headers':
-            // 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version',
           },
         })
         console.log('response received')
@@ -69,11 +67,6 @@ export default function Invoice() {
         headers: {
           'Content-Type': 'application/json',
           'X-Crezco-Key': `${apiKey}`,
-          'Access-Control-Allow-Credentials': 'true',
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'GET,OPTIONS,PATCH,DELETE,POST,PUT',
-          'Access-Control-Allow-Headers':
-          'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version',
         },
         body: JSON.stringify({
           request: {
@@ -84,8 +77,19 @@ export default function Invoice() {
           idempotencyId: newUUID
         })
       })
+      const payDemandId = await res.json();
 
-      console.log(res);
+      if (!payDemandId) { return; }
+      const qrCode = await fetch(`${getPayDemandUri}/${payDemandId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Crezco-Key': `${apiKey}`,
+        },
+      })
+      const link = await qrCode.json();
+      console.log(link);
+      setPaymentData(link)
     } catch(err) {
       console.log(err);
     }
@@ -95,6 +99,15 @@ export default function Invoice() {
     <Screen>
       <div className='w-full max-w-xs'>
         <Title>Create an Invoice</Title>
+        {
+          paymentData && (
+            <div>
+              <QRCodeSVG value={paymentData.paymentUri} />
+              <a href={paymentData.paymentUri}> Open your payment</a>
+
+            </div>
+          )
+        }
           <form method="post" onSubmit={handleSubmit}>
               <div>
                 <div className='mb-4'>
@@ -108,7 +121,7 @@ export default function Invoice() {
                     Reference: <input name="reference" className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' />
                   </label>
                 </div>
-                <button type="submit" className='bg-peach hover:bg-peach text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>Submit form</button>
+                <button type="submit" className='bg-peach hover:bg-peach text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>Submit</button>
               </div>
           </form>
       </div>
