@@ -29,7 +29,8 @@ export default function Invoice() {
               'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version',
           },
         })
-        console.log(users)
+        const userData = await users.json();
+        console.log(userData);
       } catch (err) {
         console.log(err)
       }
@@ -42,7 +43,7 @@ export default function Invoice() {
   return (
     <Screen>
       <div>
-        <h1 className="text-3xl font-bold underline">Create an Invoice</h1>
+        <h1 className="text-3xl font-bold text-white">Create an Invoice</h1>
       </div>
     </Screen>
   )
