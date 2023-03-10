@@ -93,18 +93,22 @@ export default function Invoice() {
 
   return (
     <Screen>
-      <div>
+      <div className='w-full max-w-xs'>
         <Title>Create an Invoice</Title>
           <form method="post" onSubmit={handleSubmit}>
-              <div className='flex flex-col'>
-              <label>
-                Amount: <input name="amount" />
-              </label>
-              <label>
-                Reference: <input name="reference" />
-              </label>
-
-              <button type="submit">Submit form</button>
+              <div>
+                <div className='mb-4'>
+                  <label className='block text-white text-sm font-bold mb-2'>
+                    Amount: <input name="amount" className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' />
+                  </label>
+                  
+                </div>
+                <div className='mb-4'>
+                  <label className='block text-white text-sm font-bold mb-2'>
+                    Reference: <input name="reference" className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' />
+                  </label>
+                </div>
+                <button type="submit" className='bg-peach hover:bg-peach text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>Submit form</button>
               </div>
           </form>
       </div>

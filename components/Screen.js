@@ -11,7 +11,7 @@ export default function Screen(props) {
       <main>
         <div className='bg-green min-h-screen flex'>
           <div className="flex flex-col items-center justify-center max-w-md mx-auto gap-2 w-full">
-            <div className="rounded-md border border-white p-9">
+            <div className="rounded-md border border-white p-9 shadow-md rounded px-8 pt-6 pb-8 mb-4">
               {props.children}
             </div>
           </div>
