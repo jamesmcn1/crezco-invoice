@@ -2,9 +2,9 @@ import React from 'react'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
-  const partnerCode = 'jamesmcnamara-sandbox'
+  const partnerCode = 'jamesmcnamara'
   const redirectUri = 'http://localhost:3000/invoice'
-  const url = `https://app.sandbox.crezco.com/onboarding?partner_id=${partnerCode}-sandbox&redirect_uri=${redirectUri}`
+  const url = `https://app.sandbox.crezco.com/onboarding?partner_id=${partnerCode}&redirect_uri=${redirectUri}`
 
   return (
     <div>
