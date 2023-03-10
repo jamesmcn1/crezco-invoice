@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Screen from '../components/Screen'
-import styles from '../styles/Home.module.css'
+import Title from '../components/Title'
 
 export default function Invoice() {
   const apiKey = 'cKJTQJ3T2j9FM5dySUfExkhPCaEg4Nut'
@@ -29,21 +29,22 @@ export default function Invoice() {
               'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version',
           },
         })
-        const userData = await users.json();
-        console.log(userData);
+        console.log('response received')
+        const userData = await users.json()
+        console.log(userData)
       } catch (err) {
         console.log(err)
       }
     }
 
-    getUserId() // run it, run it
+    getUserId()
     return
   })
 
   return (
     <Screen>
       <div>
-        <h1 className="text-3xl font-bold text-white">Create an Invoice</h1>
+        <Title>Create an Invoice</Title>
       </div>
     </Screen>
   )

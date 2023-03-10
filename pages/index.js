@@ -1,10 +1,16 @@
-import Home from '../components/Home'
 import Screen from '../components/Screen'
+import Title from '../components/Title'
 
-export default function App() {
+export default function Home() {
+  const partnerCode = 'jamesmcnamara'
+  const redirectUri = 'http://localhost:3000/invoice'
+  const url = `https://app.sandbox.crezco.com/onboarding?partner_id=${partnerCode}&redirect_uri=${redirectUri}`
+
   return (
     <Screen>
-      <Home />
+      <Title>Crezco Invoice App</Title>
+
+      <a href={url}>Click to onboard with Crezco</a>
     </Screen>
   )
 }
