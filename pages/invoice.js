@@ -70,8 +70,8 @@ export default function Invoice() {
         },
         body: JSON.stringify({
           request: {
-            amount: '100.00',
-            reference: '1234',
+            amount: formJson.amount,
+            reference: formJson.reference,
             currency: 'GBP'
           },
           idempotencyId: newUUID
@@ -100,10 +100,10 @@ export default function Invoice() {
       <div className='w-full max-w-xs'>
         <Title>Create an Invoice</Title>
         {
-          paymentData && (
+          paymentData && paymentData.paymentUri && (
             <div>
               <QRCodeSVG value={paymentData.paymentUri} />
-              <a href={paymentData.paymentUri}> Open your payment</a>
+              <a href={paymentData.paymentUri} className="text-peach text-center block"> Open your payment</a>
 
             </div>
           )
@@ -112,14 +112,15 @@ export default function Invoice() {
               <div>
                 <div className='mb-4'>
                   <label className='block text-white text-sm font-bold mb-2'>
-                    Amount: <input name="amount" className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' />
+                    Amount: 
                   </label>
-                  
+                  <input name="amount" className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' />
                 </div>
                 <div className='mb-4'>
                   <label className='block text-white text-sm font-bold mb-2'>
-                    Reference: <input name="reference" className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' />
+                    Reference:
                   </label>
+                  <input name="reference" className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' />
                 </div>
                 <button type="submit" className='bg-peach hover:bg-peach text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>Submit</button>
               </div>
