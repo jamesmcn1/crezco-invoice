@@ -9,8 +9,12 @@ export default function Screen(props) {
       </Head>
 
       <main>
-        <div className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-green">
-          {props.children}
+        <div className='bg-green min-h-screen flex'>
+          <div className="flex flex-col items-center justify-center max-w-md mx-auto gap-2 w-full">
+            <div className="rounded-md border border-white p-9">
+              {props.children}
+            </div>
+          </div>
         </div>
       </main>
 
