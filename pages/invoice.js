@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid'
 import Screen from '../components/Screen'
 import Title from '../components/Title'
 import InvoiceForm from '../components/InvoiceForm'
-import PaymentLink from '../components/PaymentLink';
+import PaymentLink from '../components/PaymentLink'
 
 export default function Invoice() {
   const [userData, setUserData] = React.useState({})
