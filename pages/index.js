@@ -10,7 +10,9 @@ export default function Home() {
     <Screen>
       <Title>Crezco Invoice App</Title>
 
-      <a href={url} className="text-peach text-center block">Click to onboard with Crezco</a>
+      <a href={url} className="block text-center text-peach">
+        Click to onboard with Crezco
+      </a>
     </Screen>
   )
 }

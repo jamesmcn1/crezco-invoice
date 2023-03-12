@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid'
 import Screen from '../components/Screen'
 import Title from '../components/Title'
-import {QRCodeSVG} from 'qrcode.react';
+import InvoiceForm from '../components/InvoiceForm'
+import { QRCodeSVG } from 'qrcode.react'
 
 export default function Invoice() {
-  const [userData, setUserData] = React.useState({});
-  const [paymentData, setPaymentData] = React.useState({});
+  const [userData, setUserData] = React.useState({})
+  const [paymentData, setPaymentData] = React.useState({})
   const apiKey = 'cKJTQJ3T2j9FM5dySUfExkhPCaEg4Nut'
   const router = useRouter()
   const userId = router.query['user-id']
-  const usersUrl = `https://api.sandbox.crezco.com/v1/users/${userId}`;
+  const usersUrl = `https://api.sandbox.crezco.com/v1/users/${userId}`
   const payDemandUrl = `https://api.sandbox.crezco.com/v1/users/${userId}/pay-demands`
   const getPayDemandUri = 'https://api.sandbox.crezco.com/v1/pay-demands/'
 
@@ -32,11 +33,11 @@ export default function Invoice() {
         })
         console.log('response received')
         const data = await res.json()
-        if (!data || !Object.keys(data).length) { return; }
-        
-        setUserData(data);
+        if (!data || !Object.keys(data).length) {
+          return
+        }
 
-
+        setUserData(data)
       } catch (err) {
         console.log(err)
       }
@@ -48,18 +49,17 @@ export default function Invoice() {
 
   const handleSubmit = async (e) => {
     // Prevent the browser from reloading the page
-    e.preventDefault();
+    e.preventDefault()
 
     // Read the form data
-    const form = e.target;
-    const formData = new FormData(form);
+    const form = e.target
+    const formData = new FormData(form)
 
     // Or you can work with it as a plain object:
-    const formJson = Object.fromEntries(formData.entries());
-    console.log(formJson);
+    const formJson = Object.fromEntries(formData.entries())
+    console.log(formJson)
 
-    const newUUID = uuidv4();
-
+    const newUUID = uuidv4()
 
     try {
       const res = await fetch(payDemandUrl, {
@@ -72,14 +72,16 @@ export default function Invoice() {
           request: {
             amount: formJson.amount,
             reference: formJson.reference,
-            currency: 'GBP'
+            currency: 'GBP',
           },
-          idempotencyId: newUUID
-        })
+          idempotencyId: newUUID,
+        }),
       })
-      const payDemandId = await res.json();
+      const payDemandId = await res.json()
 
-      if (!payDemandId) { return; }
+      if (!payDemandId) {
+        return
+      }
       const qrCode = await fetch(`${getPayDemandUri}/${payDemandId}`, {
         method: 'GET',
         headers: {
@@ -87,44 +89,44 @@ export default function Invoice() {
           'X-Crezco-Key': `${apiKey}`,
         },
       })
-      const link = await qrCode.json();
-      console.log(link);
+      const link = await qrCode.json()
+      console.log(link)
       setPaymentData(link)
-    } catch(err) {
-      console.log(err);
+    } catch (err) {
+      console.log(err)
     }
+  }
+
+  const renderFormOrPaymentLink = () => {
+    if (paymentData && paymentData.paymentUri) {
+      return (
+        <div className="flex flex-col items-center">
+          <QRCodeSVG value={paymentData.paymentUri} className="mb-4" />
+
+          <button
+            type="submit"
+            className="focus:shadow-outline rounded bg-peach py-2 px-4 font-bold text-white hover:bg-peach focus:outline-none"
+          >
+            Submit
+          </button>
+          <a
+            href={paymentData.paymentUri}
+            className="block text-center text-peach"
+          >
+            {' '}
+            Open your payment
+          </a>
+        </div>
+      )
+    }
+    return <InvoiceForm handleSubmit={handleSubmit} />
   }
 
   return (
     <Screen>
-      <div className='w-full max-w-xs'>
+      <div className="w-full max-w-xs">
         <Title>Create an Invoice</Title>
-        {
-          paymentData && paymentData.paymentUri && (
-            <div>
-              <QRCodeSVG value={paymentData.paymentUri} />
-              <a href={paymentData.paymentUri} className="text-peach text-center block"> Open your payment</a>
-
-            </div>
-          )
-        }
-          <form method="post" onSubmit={handleSubmit}>
-              <div>
-                <div className='mb-4'>
-                  <label className='block text-white text-sm font-bold mb-2'>
-                    Amount: 
-                  </label>
-                  <input name="amount" className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' />
-                </div>
-                <div className='mb-4'>
-                  <label className='block text-white text-sm font-bold mb-2'>
-                    Reference:
-                  </label>
-                  <input name="reference" className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' />
-                </div>
-                <button type="submit" className='bg-peach hover:bg-peach text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>Submit</button>
-              </div>
-          </form>
+        {renderFormOrPaymentLink()}
       </div>
     </Screen>
   )

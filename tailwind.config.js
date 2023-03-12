@@ -14,7 +14,7 @@ module.exports = {
     colors: {
       white: '#FFFFFF',
       green: '#428372',
-      peach: '#FF8E87'
+      peach: '#FF8E87',
     },
     fontFamily: {
       sans: ['Graphik', 'sans-serif'],
@@ -29,8 +29,8 @@ module.exports = {
         '4xl': '2rem',
       },
       gap: {
-        '11': '2.75rem',
-      }
+        11: '2.75rem',
+      },
     },
   },
   plugins: [],
