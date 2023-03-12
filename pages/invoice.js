@@ -97,24 +97,33 @@ export default function Invoice() {
     }
   }
 
+  const handleReset = (e) => {
+    e.preventDefault()
+    setPaymentData({});
+  }
+
   const renderFormOrPaymentLink = () => {
     if (paymentData && paymentData.paymentUri) {
       return (
         <div className="flex flex-col items-center">
           <QRCodeSVG value={paymentData.paymentUri} className="mb-4" />
-
-          <button
-            type="submit"
-            className="focus:shadow-outline rounded bg-peach py-2 px-4 font-bold text-white hover:bg-peach focus:outline-none"
-          >
-            Submit
-          </button>
           <a
             href={paymentData.paymentUri}
             className="block text-center text-peach"
           >
+            <button
+              type="submit"
+              className="focus:shadow-outline mb-4 rounded bg-peach py-2 px-4 font-bold text-white hover:bg-peach focus:outline-none"
+            >
+              Confirm payment
+            </button>
+          </a>
+          <a
+            onClick={handleReset}
+            className="block text-center text-peach cursor-pointer"
+          >
             {' '}
-            Open your payment
+            Make another payment
           </a>
         </div>
       )
@@ -125,7 +134,11 @@ export default function Invoice() {
   return (
     <Screen>
       <div className="w-full max-w-xs">
-        <Title>Create an Invoice</Title>
+        {
+          !paymentData.paymentUri && (
+            <Title>Create an Invoice</Title>
+          )
+        }
         {renderFormOrPaymentLink()}
       </div>
     </Screen>
