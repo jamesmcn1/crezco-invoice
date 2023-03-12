@@ -16,11 +16,11 @@ export default function Invoice() {
   const payDemandUrl = `https://api.sandbox.crezco.com/v1/users/${userId}/pay-demands`
   const getPayDemandUri = 'https://api.sandbox.crezco.com/v1/pay-demands/'
 
-  console.log(userId)
-
   useEffect(() => {
     const getUserId = async () => {
-      if (!userId) {
+      // if no query parameter, redirect to home
+      if (!window.location.search) {
+        router.push('/')
         return
       }
       try {
@@ -31,12 +31,10 @@ export default function Invoice() {
             'X-Crezco-Key': `${apiKey}`,
           },
         })
-        console.log('response received')
         const data = await res.json()
         if (!data || !Object.keys(data).length) {
           return
         }
-
         setUserData(data)
       } catch (err) {
         console.log(err)
@@ -48,17 +46,10 @@ export default function Invoice() {
   }, [userId])
 
   const handleSubmit = async (e) => {
-    // Prevent the browser from reloading the page
     e.preventDefault()
-
-    // Read the form data
     const form = e.target
     const formData = new FormData(form)
-
-    // Or you can work with it as a plain object:
     const formJson = Object.fromEntries(formData.entries())
-    console.log(formJson)
-
     const newUUID = uuidv4()
 
     try {
@@ -90,7 +81,6 @@ export default function Invoice() {
         },
       })
       const link = await qrCode.json()
-      console.log(link)
       setPaymentData(link)
     } catch (err) {
       console.log(err)
@@ -99,7 +89,7 @@ export default function Invoice() {
 
   const handleReset = (e) => {
     e.preventDefault()
-    setPaymentData({});
+    setPaymentData({})
   }
 
   const renderFormOrPaymentLink = () => {
@@ -120,7 +110,7 @@ export default function Invoice() {
           </a>
           <a
             onClick={handleReset}
-            className="block text-center text-peach cursor-pointer"
+            className="block cursor-pointer text-center text-peach"
           >
             {' '}
             Make another payment
@@ -134,11 +124,7 @@ export default function Invoice() {
   return (
     <Screen>
       <div className="w-full max-w-xs">
-        {
-          !paymentData.paymentUri && (
-            <Title>Create an Invoice</Title>
-          )
-        }
+        {!paymentData.paymentUri && <Title>Create an Invoice</Title>}
         {renderFormOrPaymentLink()}
       </div>
     </Screen>
