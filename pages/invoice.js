@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid'
 import Screen from '../components/Screen'
 import Title from '../components/Title'
 import InvoiceForm from '../components/InvoiceForm'
-import { QRCodeSVG } from 'qrcode.react'
+import PaymentLink from '../components/PaymentLink';
 
 export default function Invoice() {
   const [userData, setUserData] = React.useState({})
@@ -94,29 +94,7 @@ export default function Invoice() {
 
   const renderFormOrPaymentLink = () => {
     if (paymentData && paymentData.paymentUri) {
-      return (
-        <div className="flex flex-col items-center">
-          <QRCodeSVG value={paymentData.paymentUri} className="mb-4" />
-          <a
-            href={paymentData.paymentUri}
-            className="block text-center text-peach"
-          >
-            <button
-              type="submit"
-              className="focus:shadow-outline mb-4 rounded bg-peach py-2 px-4 font-bold text-white hover:bg-peach focus:outline-none"
-            >
-              Confirm payment
-            </button>
-          </a>
-          <a
-            onClick={handleReset}
-            className="block cursor-pointer text-center text-peach"
-          >
-            {' '}
-            Make another payment
-          </a>
-        </div>
-      )
+      return <PaymentLink paymentData={paymentData} handleReset={handleReset} />
     }
     return <InvoiceForm handleSubmit={handleSubmit} />
   }
