@@ -9,6 +9,7 @@ export default function InvoiceForm({ handleSubmit }) {
           <input
             name="amount"
             className="text-gray-700 focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight shadow focus:outline-none"
+            required
           />
         </div>
         <div className="mb-4">
@@ -18,6 +19,7 @@ export default function InvoiceForm({ handleSubmit }) {
           <input
             name="reference"
             className="text-gray-700 focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight shadow focus:outline-none"
+            required
           />
         </div>
         <button
