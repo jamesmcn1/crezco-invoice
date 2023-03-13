@@ -32,3 +32,4 @@ NEXT_PUBLIC_CREZCO_API_KEY=cKJTQJ3T2j9FM5dySUfExkhPCaEg4Nut
 - Improve form validation
 - Improve Security (Remove NEXT_PUBLIC from CREZCO_API_KEY, CSRF protection etc)
 - Improve styling
+- Add prop types
