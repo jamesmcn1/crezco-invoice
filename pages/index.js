@@ -2,7 +2,7 @@ import Screen from '../components/Screen'
 import Title from '../components/Title'
 
 export default function Home() {
-  const partnerCode = 'jamesmcnamara'
+  const partnerCode = process.env.CREZCO_PARTNER_CODE
   const redirectUri = `${process.env.HOST}/invoice`
   const url = `https://app.sandbox.crezco.com/onboarding?partner_id=${partnerCode}&redirect_uri=${redirectUri}`
 

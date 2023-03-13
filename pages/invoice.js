@@ -9,7 +9,7 @@ import PaymentLink from '../components/PaymentLink'
 export default function Invoice() {
   const [userData, setUserData] = React.useState({}) // Not currently being used but needed for further work
   const [paymentData, setPaymentData] = React.useState({})
-  const apiKey = 'cKJTQJ3T2j9FM5dySUfExkhPCaEg4Nut'
+  const apiKey = process.env.CREZCO_API_KEY
   const router = useRouter()
   const userId = router.query['user-id']
   const usersUrl = `https://api.sandbox.crezco.com/v1/users/${userId}`

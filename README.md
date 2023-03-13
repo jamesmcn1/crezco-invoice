@@ -18,6 +18,8 @@ This is a simple application that allows a user to onboard with Crezco, and crea
 HOSTNAME=localhost
 PORT=3000
 HOST=http://$HOSTNAME:$PORT
+CREZCO_PARTNER_CODE=jamesmcnamara
+CREZCO_API_KEY=cKJTQJ3T2j9FM5dySUfExkhPCaEg4Nut
 ```
 
 4.  Run `npm run dev` to run application locally
