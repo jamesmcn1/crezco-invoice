@@ -11,8 +11,17 @@ This is a simple application that allows a user to onboard with Crezco, and crea
 
 1.  Clone the repo
 2.  Run `npm install` to install files
-3.  Run `npm run dev` to run application locally
-4.  Run `npm run test` to run unit tests
+3.  Add an environment file like so:
+
+```
+# .env
+HOSTNAME=localhost
+PORT=3000
+HOST=http://$HOSTNAME:$PORT
+```
+
+4.  Run `npm run dev` to run application locally
+5.  Run `npm run test` to run unit tests
 
 ## To Dos
 
