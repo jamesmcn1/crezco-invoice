@@ -7,7 +7,7 @@ import InvoiceForm from '../components/InvoiceForm'
 import PaymentLink from '../components/PaymentLink'
 
 export default function Invoice() {
-  const [userData, setUserData] = React.useState({})
+  const [userData, setUserData] = React.useState({}) // Not currently being used but needed for further work
   const [paymentData, setPaymentData] = React.useState({})
   const apiKey = 'cKJTQJ3T2j9FM5dySUfExkhPCaEg4Nut'
   const router = useRouter()
