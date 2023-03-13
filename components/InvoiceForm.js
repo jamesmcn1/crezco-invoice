@@ -8,7 +8,7 @@ export default function InvoiceForm({ handleSubmit }) {
           </label>
           <input
             name="amount"
-            className="text-gray-700 focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight shadow focus:outline-none"
+            className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight shadow focus:outline-none"
             required
           />
         </div>
@@ -18,7 +18,7 @@ export default function InvoiceForm({ handleSubmit }) {
           </label>
           <input
             name="reference"
-            className="text-gray-700 focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight shadow focus:outline-none"
+            className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight shadow focus:outline-none"
             required
           />
         </div>
