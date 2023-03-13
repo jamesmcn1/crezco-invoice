@@ -30,5 +30,5 @@ CREZCO_API_KEY=cKJTQJ3T2j9FM5dySUfExkhPCaEg4Nut
 - Site hosting
 - Add more unit tests, and implement Cypress integration testing
 - Improve form validation
-- Improve Security (CSRF protection etc)
+- Improve Security (Remove NEXT_PUBLIC from CREZCO_API_KEY, CSRF protection etc)
 - Improve styling
